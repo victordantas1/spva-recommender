@@ -9,7 +9,7 @@ class Candidate(Model):
     first_name: str
     last_name: str
     email: EmailStr
-    table: str
+    resume_path: str
     document: str
     tokens: Optional[List[str]] = None
     tokens_clean: Optional[List[str]] = None
@@ -18,14 +18,3 @@ class Candidate(Model):
     model_config = {
         "collection": "user_app"
     }
-
-    def __repr__(self):
-        return (f"user_id: {self.user_id}, "
-                f"first_name: {self.first_name}, "
-                f"last_name: {self.last_name}, "
-                f"email: {self.email}"
-                f"table: {self.table}, "
-                f"document: {self.document}, "
-                f"tokens: {self.tokens}, "
-                f"tokens_clean: {self.tokens_clean}, "
-                f"tokens_ner: {self.tokens_ner}, ")
