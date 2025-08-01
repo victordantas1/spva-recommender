@@ -1,2 +1,2 @@
-from .job import Job
-from .candidate import Candidate
+from .job import *
+from .candidate import *
