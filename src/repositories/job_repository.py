@@ -1,11 +1,10 @@
-from models.job import Job
-
+from models import JobTextView, Job
 
 class JobRepository:
-    def __init__(self, engine):
-        self.engine = engine
+    def __init__(self):
+        pass
 
-    async def get_job(self, job_id) -> Job:
-        job = await self.engine.find_one(Job, Job.job_id == job_id)
+    async def get_job(self, job_id) -> JobTextView:
+        job = await Job.find_one(Job.job_id == job_id).project(JobTextView)
         return job
 

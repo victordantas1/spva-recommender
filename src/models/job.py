@@ -1,11 +1,13 @@
 from typing import List, Optional
 
-from odmantic import Model
+import pymongo
+from beanie import Document, Indexed
+from pydantic import BaseModel
 
 from enums import CategoryEnum
 
-class Job(Model):
-    job_id: int
+class Job(Document):
+    job_id: Indexed(int, index_type=pymongo.ASCENDING)
     user_id: int
     title: str
     description: str
@@ -24,6 +26,12 @@ class Job(Model):
     tokens_clean: Optional[List[str]] = None
     tokens_ner: Optional[List[str]] = None
 
-    model_config = {
-        "collection": "job"
-    }
+    class Settings:
+        name = 'job'
+
+class JobTextView(BaseModel):
+    job_id: int
+    document: str
+    tokens: Optional[List[str]] = None
+    tokens_clean: Optional[List[str]] = None
+    tokens_ner: Optional[List[str]] = None
