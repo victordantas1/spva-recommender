@@ -1,4 +1,5 @@
 import torch
+from safetensors.torch import load_model
 from sentence_transformers import util, SentenceTransformer
 
 from services.embedding_model import EmbeddingModelBase
@@ -10,6 +11,7 @@ class EmbeddingModelTransformer(EmbeddingModelBase):
         self.model = None
         self.model_name_or_path = config['model_name_or_path']
         self.model_dir = config['model_dir']
+        self.load_model()
 
     def load_model(self):
         self.model = SentenceTransformer(self.model_name_or_path)

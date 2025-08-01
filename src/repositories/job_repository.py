@@ -6,6 +6,6 @@ class JobRepository:
         self.engine = engine
 
     async def get_job(self, job_id) -> Job:
-        job = await self.engine.find(Job, Job.job_id == job_id)
+        job = await self.engine.find_one(Job, Job.job_id == job_id)
         return job
 
