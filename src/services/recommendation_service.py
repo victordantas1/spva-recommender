@@ -2,9 +2,9 @@ from typing import List, Tuple
 
 from torch import Tensor
 
-from models import Job, Candidate
-from repositories import JobRepository, CandidateRepository
-from services.embedding_model import EmbeddingModelBase
+from ..models import Job, Candidate
+from ..repositories import JobRepository, CandidateRepository
+from ..services.embedding_model import EmbeddingModelBase
 
 
 class RecommendationService:
@@ -21,17 +21,21 @@ class RecommendationService:
     async def get_recommendations(self, job_id, candidates_list, top_k) -> List[Tuple[Candidate, Tensor]]:
         job, candidates = await self.get_job_and_candidates(job_id, candidates_list)
 
-        cosine_similarity_list = []
+        if not job or not candidates:
+            return []
 
-        for candidate in candidates:
-            job_emb = self.embedding_model.encode(job.document)
-            candidate_emb = self.embedding_model.encode(candidate.document)
-            cosine_similarity_list.append((candidate, self.embedding_model.cosine_similarity(job_emb, candidate_emb)))
+        job_emb = self.embedding_model.encode(job.document)
 
-        cosine_similarity_list = sorted(cosine_similarity_list, key=lambda x: x[1], reverse=True)[:top_k]
+        candidate_documents = [c.document for c in candidates]
+        all_candidates_embs = self.embedding_model.encode(candidate_documents)
 
-        return cosine_similarity_list
+        similarities = self.embedding_model.cosine_similarity(job_emb, all_candidates_embs)
 
+        results = list(zip(candidates, similarities[0]))
+
+        sorted_results = sorted(results, key=lambda x: x[1], reverse=True)[:top_k]
+
+        return sorted_results
 
 
 

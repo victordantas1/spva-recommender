@@ -1,4 +1,4 @@
-from models import JobTextView, Job
+from ..models import JobTextView, Job
 
 class JobRepository:
     def __init__(self):

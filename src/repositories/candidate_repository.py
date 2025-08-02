@@ -2,7 +2,7 @@ from typing import List
 
 from beanie.odm.operators.find.comparison import In
 
-from models import Candidate, CandidateTextView
+from ..models import Candidate, CandidateTextView
 
 
 class CandidateRepository:
