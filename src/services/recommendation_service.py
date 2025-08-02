@@ -1,6 +1,6 @@
-from typing import List, Tuple
+from typing import List
 
-from torch import Tensor
+from loguru import logger
 
 from src.schemas.candidate_schema import CandidateOut
 from src.models.job import Job
@@ -23,7 +23,6 @@ class RecommendationService:
 
     async def get_recommendations(self, job_id, candidates_list, top_k) -> List[CandidateOut]:
         job, candidates = await self.get_job_and_candidates(job_id, candidates_list)
-
         if not job or not candidates:
             return []
 
