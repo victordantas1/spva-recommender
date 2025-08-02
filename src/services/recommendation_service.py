@@ -36,7 +36,6 @@ class RecommendationService:
         results = list(zip(candidates, similarities[0]))
 
         sorted_results = sorted(results, key=lambda x: x[1], reverse=True)[:top_k]
-        print(sorted_results)
         return sorted_results
 
 
