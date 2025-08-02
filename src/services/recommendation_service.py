@@ -2,8 +2,10 @@ from typing import List, Tuple
 
 from torch import Tensor
 
-from ..models import Job, Candidate
-from ..repositories import JobRepository, CandidateRepository
+from src.models.job import Job
+from src.models.candidate import Candidate
+from src.repositories.job_repository import JobRepository
+from src.repositories.candidate_repository import CandidateRepository
 from ..services.embedding_model import EmbeddingModelBase
 
 
@@ -34,7 +36,7 @@ class RecommendationService:
         results = list(zip(candidates, similarities[0]))
 
         sorted_results = sorted(results, key=lambda x: x[1], reverse=True)[:top_k]
-
+        print(sorted_results)
         return sorted_results
 
 

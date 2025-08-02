@@ -3,10 +3,11 @@ from typing import Annotated
 
 from fastapi import Depends
 from loguru import logger
-from .config import config
-from .repositories import JobRepository, CandidateRepository
-from .services import RecommendationService
-from .services.embedding_model import EmbeddingModelBase, EmbeddingModelTransformer
+from src.config.config import config
+from src.repositories.job_repository import JobRepository
+from src.repositories.candidate_repository import CandidateRepository
+from src.services.recommendation_service import RecommendationService
+from src.services.embedding_model import EmbeddingModelBase, EmbeddingModelTransformer
 
 @lru_cache()
 def get_job_repository() -> JobRepository:

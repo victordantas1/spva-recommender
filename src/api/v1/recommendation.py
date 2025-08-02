@@ -1,10 +1,12 @@
-from typing import Annotated, List
+from typing import Annotated, List, Tuple
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel
+from torch import Tensor
 
+from src.models.job import JobTextView
 from src.dependencies import get_recommendation_service
-from src.services import RecommendationService
+from src.services.recommendation_service import RecommendationService
 
 router = APIRouter(tags=["recommendation"], prefix="/recommendation")
 

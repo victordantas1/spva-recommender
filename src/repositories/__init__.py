@@ -1,2 +1,0 @@
-from .job_repository import JobRepository
-from .candidate_repository import CandidateRepository
