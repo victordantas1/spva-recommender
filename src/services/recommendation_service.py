@@ -2,6 +2,7 @@ from typing import List, Tuple
 
 from torch import Tensor
 
+from src.schemas.candidate_schema import CandidateOut
 from src.models.job import Job
 from src.models.candidate import Candidate
 from src.repositories.job_repository import JobRepository
@@ -20,7 +21,7 @@ class RecommendationService:
         candidates = await self.candidate_repository.get_candidates(candidates_list)
         return job, candidates
 
-    async def get_recommendations(self, job_id, candidates_list, top_k) -> List[Tuple[Candidate, Tensor]]:
+    async def get_recommendations(self, job_id, candidates_list, top_k) -> List[CandidateOut]:
         job, candidates = await self.get_job_and_candidates(job_id, candidates_list)
 
         if not job or not candidates:
@@ -34,9 +35,13 @@ class RecommendationService:
         similarities = self.embedding_model.cosine_similarity(job_emb, all_candidates_embs)
 
         results = list(zip(candidates, similarities[0]))
-
         sorted_results = sorted(results, key=lambda x: x[1], reverse=True)[:top_k]
-        return sorted_results
+
+        candidates_list = []
+        for candidate, score in results:
+            candidates_list.append(CandidateOut(candidate=candidate, score=score))
+
+        return candidates_list
 
 
 
