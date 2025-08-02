@@ -4,7 +4,7 @@ import pymongo
 from beanie import Document, Indexed
 from pydantic import BaseModel
 
-from enums import CategoryEnum
+from src.enums.category_enum import CategoryEnum
 
 class Job(Document):
     job_id: Indexed(int, index_type=pymongo.ASCENDING)

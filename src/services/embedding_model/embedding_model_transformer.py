@@ -1,8 +1,7 @@
 import torch
-from safetensors.torch import load_model
 from sentence_transformers import util, SentenceTransformer
 
-from services.embedding_model import EmbeddingModelBase
+from src.services.embedding_model import EmbeddingModelBase
 
 
 class EmbeddingModelTransformer(EmbeddingModelBase):
