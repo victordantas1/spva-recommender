@@ -1,5 +1,4 @@
 from typing import List, Optional
-
 import pymongo
 from beanie import Document, Indexed
 from pydantic import BaseModel
@@ -14,6 +13,7 @@ class Job(Document):
     position: str
     category: CategoryEnum
     create_date: int
+    update_date: Indexed(int, index_type=pymongo.DESCENDING)
     responsibilities: str
     requirements: str
     level: str
@@ -32,6 +32,7 @@ class Job(Document):
 class JobTextView(BaseModel):
     job_id: int
     document: str
+    update_date: int
     tokens: Optional[List[str]] = None
     tokens_clean: Optional[List[str]] = None
     tokens_ner: Optional[List[str]] = None
