@@ -1,13 +1,12 @@
 from typing import List
 
-from loguru import logger
-
 from src.schemas.candidate_schema import CandidateOut
 from src.models.job import Job
 from src.models.candidate import Candidate
 from src.repositories.job_repository import JobRepository
 from src.repositories.candidate_repository import CandidateRepository
 from ..services.embedding_model import EmbeddingModelBase
+from loguru import logger
 
 
 class RecommendationService:
@@ -37,7 +36,7 @@ class RecommendationService:
         sorted_results = sorted(results, key=lambda x: x[1], reverse=True)[:top_k]
 
         candidates_list = []
-        for candidate, score in results:
+        for candidate, score in sorted_results:
             candidates_list.append(CandidateOut(candidate=candidate, score=score))
 
         return candidates_list
