@@ -1,0 +1,9 @@
+services:
+  spva-backend:
+    build: .
+    container_name: spva-backend-app
+    env_file:
+      - .env
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
