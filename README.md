@@ -23,7 +23,13 @@ O processo de recomendação segue os seguintes passos:
   - **Conteinerização:** Docker, Docker Compose
   - **Servidor Web:** Uvicorn, Gunicorn
 
-## Instalação e Configuração
+## Como Executar o Projeto
+
+Existem duas maneiras de executar o projeto: utilizando Docker para uma configuração completa e automatizada, ou localmente para desenvolvimento.
+
+### Modo 1: Executando com Docker (Recomendado)
+
+Este modo orquestra a aplicação em um contêiner.
 
 **Pré-requisitos:**
 
@@ -33,41 +39,74 @@ O processo de recomendação segue os seguintes passos:
 **Passos:**
 
 1.  **Clonar o repositório:**
+
     ```bash
     git clone git@github.com:victordantas1/spva-recommender.git
     cd spva-recommender
     ```
+
 2.  **Configurar variáveis de ambiente:**
-      - Crie um ficheiro `.env` na raiz do projeto (pode basear-se num `.env.example` se existir).
-      - Configure as variáveis necessárias, como a URL do MongoDB:
-        ```env
-        MONGODB_URL=mongodb://localhost:27017/spva
+
+      - Crie um arquivo `.env` a partir do template fornecido.
+        ```bash
+        cp .env.template .env
         ```
+      - Revise o arquivo `.env` e ajuste as variáveis se necessário, especialmente a `MONGODB_URL` para apontar para sua instância do MongoDB.
+
 3.  **Iniciar o serviço com Docker Compose:**
+
     ```bash
     docker-compose up -d --build
     ```
-    Este comando irá construir a imagem Docker e iniciar o contentor da aplicação. O serviço estará disponível na porta `8001` por defeito.
 
-## Como Executar o Projeto
+    Este comando irá construir a imagem Docker e iniciar o contêiner da aplicação. O serviço estará disponível na porta `8001` por padrão.
 
-O script `run.sh` permite executar a aplicação em diferentes ambientes:
+### Modo 2: Executando Localmente (Desenvolvimento)
 
-  - **Desenvolvimento:**
+Este modo é ideal para desenvolvimento e depuração. Requer que você tenha as dependências (Python, MongoDB) instaladas na sua máquina.
+
+**Pré-requisitos:**
+
+  - Python 3.10 ou superior
+  - Acesso a uma instância do MongoDB.
+
+**Passos:**
+
+1.  **Clonar o repositório:**
 
     ```bash
-    ./run.sh dev
+    git clone git@github.com:victordantas1/spva-recommender.git
+    cd spva-recommender
     ```
 
-    O Uvicorn iniciará o servidor com *hot-reload* ativado.
-
-  - **Produção:**
+2.  **Criar ambiente virtual e instalar dependências:**
 
     ```bash
-    ./run.sh prod
+    python -m venv venv
+    source venv/bin/activate  # No Windows: venv\Scripts\activate
+    pip install -r requirements.txt
     ```
 
-    O Gunicorn iniciará o servidor com múltiplos *workers* para um ambiente de produção.
+3.  **Configurar variáveis de ambiente:**
+
+      - Crie o arquivo `.env` a partir do template:
+        ```bash
+        cp .env.template .env
+        ```
+      - **Edite o arquivo `.env`** para configurar as variáveis, como a `MONGODB_URL` e a `PORT`.
+
+4.  **Executar o script de inicialização:**
+
+      - Para modo de desenvolvimento com hot-reload:
+        ```bash
+        ./run.sh dev
+        ```
+      - Para modo de produção:
+        ```bash
+        ./run.sh prod
+        ```
+
+    A API estará acessível na porta configurada no seu arquivo `.env` (padrão `8001`).
 
 ## API Endpoint
 
