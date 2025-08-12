@@ -1,0 +1,9 @@
+services:
+  spva-recommender:
+    build: .
+    container_name: spva-recommender-app
+    env_file:
+      - .env
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
