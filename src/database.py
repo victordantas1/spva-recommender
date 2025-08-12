@@ -1,5 +1,6 @@
 from typing import List
 
+from src.config.config import config
 from beanie import init_beanie
 from motor import motor_asyncio
 

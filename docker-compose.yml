@@ -1,7 +1,7 @@
 services:
-  spva-backend:
+  spva-recommender:
     build: .
-    container_name: spva-backend-app
+    container_name: spva-recommender-app
     env_file:
       - .env
     ports:
